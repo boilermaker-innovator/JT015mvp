@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Teaser Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f0f8ff;
+        }
+        form {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .create-button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+        }
+        .clear-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+        .fill-test-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        #jobTeaserCard, #tabbedTeaser {
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        .job-header {
+            background-color: #0056b3;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .job-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-right: 15px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .job-title {
+            margin: 0;
+            font-size: 18px;
+        }
+        .job-company-location {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        .tabs {
+            display: flex;
+            background-color: #e0e0e0;
+        }
+        .tab {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #e0e0e0;
+            border: none;
+            flex-grow: 1;
+            color: #0056b3;
+        }
+        .tab.active {
+            background-color: white;
+            font-weight: bold;
+            border-bottom: 2px solid #0056b3;
+        }
+        .tab-content {
+            padding: 15px;
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .apply-button {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: #e4007e;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Job Teaser Creator</h1>
+    <form id="jobForm">
+        <button type="button" class="fill-test-button" id="fillTest" onclick="prefillForm()">Fill for Test</button>
+
+        <label for="jobUrl">Job URL:</label>
+        <input type="url" id="jobUrl" name="jobUrl" required>
+
+        <label for="jobTitle">Job Title:</label>
+        <input type="text" id="jobTitle" name="jobTitle" required>
+
+        <label for="company">Company:</label>
+        <input type="text" id="company" name="company" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="logoUrl">Logo URL:</label>
+        <input type="url" id="logoUrl" name="logoUrl" required>
+
+        <label for="overview">Overview:</label>
+        <textarea id="overview" name="overview" required></textarea>
+
+        <label for="responsibilities">Responsibilities:</label>
+        <textarea id="responsibilities" name="responsibilities" required></textarea>
+
+        <label for="requirements">Requirements:</label>
+        <textarea id="requirements" name="requirements" required></textarea>
+
+        <label for="benefits">Benefits:</label>
+        <textarea id="benefits" name="benefits" required></textarea>
+
+        <div class="button-group">
+            <button type="submit" class="create-button">Create Teaser</button>
+            <button type="button" class="clear-button" id="clearForm">Clear Form</button>
+        </div>
+    </form>
+
+    <div id="jobTeaserCard" style="display: none;"></div>
+    <div id="tabbedTeaser" style="display: none;"></div>
+
+    <script>
+        function prefillForm() {
+            document.getElementById('jobUrl').value = "https://www.seek.com.au/job/79192169";
+            document.getElementById('jobTitle').value = "Boilermaker/Welder";
+            document.getElementById('company').value = "Steel Maintenance Services";
+            document.getElementById('location').value = "Kalgoorlie WA";
+            document.getElementById('logoUrl').value = "https://corporate.seek.com.au/wp-content/uploads/2019/11/SEEK-site-logo-320x107.png";
+            document.getElementById('overview').value = "We are seeking experienced Boilermakers/Welders for shutdown work in Kalgoorlie. This role offers competitive rates and the opportunity to work with a leading maintenance services company in the mining industry.";
+            document.getElementById('responsibilities').value = "- Perform welding, cutting, and fabrication tasks\n- Interpret technical drawings and follow job specifications\n- Maintain and repair mining equipment and structures\n- Ensure all work meets quality and safety standards\n- Collaborate with other tradespeople on various projects";
+            document.getElementById('requirements').value = "- Trade qualification as a Boilermaker/Welder\n- Minimum 2 years experience in mining or heavy industry\n- Current drivers license\n- Ability to pass pre-employment medical and drug screening\n- Willingness to work flexible hours including nights and weekends\n- Strong commitment to safety and quality";
+            document.getElementById('benefits').value = "- Competitive hourly rates\n- Opportunity for overtime and weekend work\n- Accommodation and meals provided for non-local workers\n- Career growth opportunities within a reputable company\n- Supportive team environment\n- Regular work with potential for long-term employment";
+        }
+
+        document.getElementById('jobForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var jobData = Object.fromEntries(formData);
+            
+            // Generate Job Teaser Card
+            var cardHtml = `
+                <div class="job-header">
+                    <img src="${jobData.logoUrl}" alt="${jobData.company} Logo" class="job-logo">
+                    <div>
+                        <h2 class="job-title">${jobData.jobTitle}</h2>
+                        <div class="job-company-location">${jobData.company} - ${jobData.location}</div>
+                    </div>
+                </div>
+                <div style="padding: 15px;">
+                    <h3>Overview</h3>
+                    <p>${jobData.overview}</p>
+                    <h3>Responsibilities</h3>
+                    <p>${jobData.responsibilities}</p>
+                    <h3>Requirements</h3>
+                    <p>${jobData.requirements}</p>
+                    <h3>Benefits</h3>
+                    <p>${jobData.benefits}</p>
+                </div>
+                <a href="${jobData.jobUrl}" class="apply-button" target="_blank">Apply Now</a>
+            `;
+            document.getElementById('jobTeaserCard').innerHTML = cardHtml;
+            document.getElementById('jobTeaserCard').style.display = 'block';
+            
+            // Generate Tabbed Teaser
+            var tabbedHtml = `
+                <div class="job-header">
+                    <img src="${jobData.logoUrl}" alt="${jobData.company} Logo" class="job-logo">
+                    <div>
+                        <h2 class="job-title">${jobData.jobTitle}</h2>
+                        <div class="job-company-location">${jobData.company} - ${jobData.location}</div>
+                    </div>
+                </div>
+                <div class="tabs">
+                    <button class="tab active" onclick="openTab(event, 'overviewTab')">Overview</button>
+                    <button class="tab" onclick="openTab(event, 'responsibilitiesTab')">Responsibilities</button>
+                    <button class="tab" onclick="openTab(event, 'requirementsTab')">Requirements</button>
+                    <button class="tab" onclick="openTab(event, 'benefitsTab')">Benefits</button>
+                </div>
+                <div id="overviewTab" class="tab-content active"><p>${jobData.overview}</p></div>
+                <div id="responsibilitiesTab" class="tab-content"><p>${jobData.responsibilities.replace(/\n/g, '<br>')}</p></div>
+                <div id="requirementsTab" class="tab-content"><p>${jobData.requirements.replace(/\n/g, '<br>')}</p></div>
+                <div id="benefitsTab" class="tab-content"><p>${jobData.benefits.replace(/\n/g, '<br>')}</p></div>
+                <a href="${jobData.jobUrl}" class="apply-button" target="_blank">Apply Now</a>
+            `;
+            document.getElementById('tabbedTeaser').innerHTML = tabbedHtml;
+            document.getElementById('tabbedTeaser').style.display = 'block';
+            
+            startTabRotation();
+        });
+
+        document.getElementById('clearForm').addEventListener('click', function() {
+            document.getElementById('jobForm').reset();
+            document.getElementById('jobTeaserCard').innerHTML = '';
+            document.getElementById('jobTeaserCard').style.display = 'none';
+            document.getElementById('tabbedTeaser').innerHTML = '';
+            document.getElementById('tabbedTeaser').style.display = 'none';
+        });
+
+        function openTab(evt, tabName) {
+            var i, tabContent, tabLinks;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+            tabLinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+            
+            // Scroll to Job Teaser Card when a tab is clicked
+            document.getElementById('jobTeaserCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function startTabRotation() {
+            const tabs = ['overviewTab', 'responsibilitiesTab', 'requirementsTab', 'benefitsTab'];
+            let currentTabIndex = 0;
+
+            setInterval(() => {
+                openTab({ currentTarget: document.querySelector(`.tab[onclick="openTab(event, '${tabs[currentTabIndex]}')"]`) }, tabs[currentTabIndex]);
+                currentTabIndex = (currentTabIndex + 1) % tabs.length;
+            }, 5000); // Change tab every 5 seconds
+        }
+    </script>
+</body>
+</html>
